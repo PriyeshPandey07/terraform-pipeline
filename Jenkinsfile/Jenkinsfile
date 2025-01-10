@@ -1,0 +1,24 @@
+pipeline {
+    agent {
+        label 'agent1'
+    }
+  
+    stages { 
+        stage("checkout scm") {
+            steps {
+                git url:'https://github.com/PriyeshPandey07/Jenkins-my-project.git', credentialsId: 'MyID', branch: 'main'
+            }
+        }
+        stage("build Image") { 
+            steps {
+
+                sh "docker build -t myphpimg:latest ."
+            }
+        }
+        stage("Container Create") {
+            steps {
+                sh "docker run -d -p 8089:80 --name myphpcon myphpimg:latest"
+            }
+        }
+    }
+}
