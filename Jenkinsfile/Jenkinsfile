@@ -1,24 +1,32 @@
-pipeline {
+pipeline { 
     agent {
         label 'agent1'
     }
-  
-    stages { 
-        stage("checkout scm") {
-            steps {
-                git url:'https://github.com/PriyeshPandey07/Jenkins-my-project.git', credentialsId: 'MyID', branch: 'main'
-            }
+     
+    stages {
+      stage("checkout scm") {
+        steps {
+          git branch: 'terraform', url: 'https://github.com/PriyeshPandey07/terraform-pipeline.git'
         }
-        stage("build Image") { 
-            steps {
+      }
 
-                sh "docker build -t myphpimg:latest ."
-            }
+      stage("terraform Init"){
+        steps { 
+            sh 'terraform init'
         }
-        stage("Container Create") {
-            steps {
-                sh "docker run -d -p 8089:80 --name myphpcon myphpimg:latest"
-            }
+      }
+
+      stage("terraform plan"){
+        steps {
+            sh 'terraform plan'
         }
+      } 
+
+      stage("terraform destroy") { 
+        steps { 
+            sh 'terraform destroy --auto-approve'
+        }
+      }
+      
     }
 }
