@@ -6,7 +6,7 @@ pipeline {
     stages {
       stage("checkout scm") {
         steps {
-          git branch: 'terraform', url: 'https://github.com/PriyeshPandey07/terraform-pipeline.git'
+          git branch: 'terraform', url: 'https://github.com/PriyeshPandey07/terraform-pipeline-vpc-subnet.git'
         }
       }
 
